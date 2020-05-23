@@ -42,7 +42,7 @@ class Board extends React.Component {
        { columnSettings.map(
          (value, index) => {
           return(
-            <Column index={ value.index } moveCard={ false } key={ value.id } color={ value.color } title={ value.title } />
+            <Column columnIndex={ value.index } key={ value.id } color={ value.color } title={ value.title } />
           );
          }
        ) }

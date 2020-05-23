@@ -4,14 +4,9 @@ import Card from '../card/card';
 import { connect } from 'react-redux';
 
 function mapStateToProps(state, ownProps) {
-    if(state.index + 1 != ownProps.index) return {};
-    state.self.columnBody.removeChild(state.card);
-    return (
-        {
-            moveCard: true,
-            text: state.card.props.text
-        }
-    );
+    if(state.columnIndex + 1 !== ownProps.columnIndex) return {};
+    state.deleteCard(state.cardIndex)
+    // state.moveCard(state.cardIndex);
 }
 
 class Column extends React.Component {
@@ -24,16 +19,31 @@ class Column extends React.Component {
         };
     }
 
-    addCard(text) {
-        text = (text)? text : prompt('Введите текст', '');
-        if(!text) return;
-        this.setState((prevState) => this.state.cardList.push(<Card column={ this } index={ this.props.index } key={ text } text={ text } />));
+    addCard(event, text) {
+        text = text || prompt('Введите текст', '');
+        this.setState((prevState) => (
+            {
+                cardList: prevState.cardList.concat({
+                    columnIndex: this.props.columnIndex,
+                    cardIndex: prevState.cardList.length,
+                    deleteCard: this.deleteCard,
+                    key: text,
+                    text: text
+                }
+        )
+        }));
     }
 
-    componentDidUpdate() {
-        if(!this.props.moveCard) return;
-        this.props.moveCard = false;
-        this.addCard(this.props.text);
+    deleteCard = (cardIndex) => {
+        this.setState((prevState) => {
+            return(
+                {
+                    cardList: prevState.cardList.filter((value, index) => {
+                        return (index === cardIndex)? false: true;
+                    })
+                }
+            );
+        });
     }
 
     render() {
@@ -50,8 +60,15 @@ class Column extends React.Component {
                 {
                     // Main part
                 }
-                <section ref={(ref) => { this.columnBody = (this.columnBody == null || ref != null)? ref : this.columnBody }} className="column__body">
-                    { (this.state.cardList)? this.state.cardList : null }
+                <section className="column__body">
+                    { this.state.cardList && this.state.cardList.map(
+                        (value, index) => {
+                            return(
+                                <Card columnIndex={ value.columnIndex } cardIndex={ value.cardIndex } deleteCard={ value.deleteCard } key={ value.key } text={ value.text } />
+                            );
+                        }
+                        )
+                    }
                 </section>
             </div>
         );
