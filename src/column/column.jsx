@@ -4,16 +4,18 @@ import Card from '../card/card';
 import { connect } from 'react-redux';
 
 function mapStateToProps(state, ownProps) {
+    if(!state.needMove) return { needMove: false, cardText: '' };
     if(state.columnIndex + 1 !== ownProps.columnIndex) return {};
-    state.deleteCard(state.cardIndex)
-    // state.moveCard(state.cardIndex);
+    return {
+        cardText: state.cardText,
+        needMove: true
+    }
 }
 
 class Column extends React.Component {
     constructor(props) {
         super(props);
         this.addCard = this.addCard.bind(this);
-        this.columnBody = null;
         this.state = {
             cardList: []
         };
@@ -21,25 +23,33 @@ class Column extends React.Component {
 
     addCard(event, text) {
         text = text || prompt('Введите текст', '');
-        this.setState((prevState) => (
-            {
+        this.setState((prevState) => {
+            return({
                 cardList: prevState.cardList.concat({
                     columnIndex: this.props.columnIndex,
                     cardIndex: prevState.cardList.length,
                     deleteCard: this.deleteCard,
-                    key: text,
+                    key: text + prevState.cardList.length,
                     text: text
-                }
-        )
-        }));
+                })
+            })
+        });
     }
 
-    deleteCard = (cardIndex) => {
+    componentDidUpdate() {
+        if(this.props.needMove) {
+            this.props.dispatch({type: 'MOVE_END'});
+            this.addCard(undefined, this.props.cardText);
+        }
+        
+    }
+
+    deleteCard = (cardKey) => {
         this.setState((prevState) => {
             return(
                 {
                     cardList: prevState.cardList.filter((value, index) => {
-                        return index !== cardIndex;
+                        return value.key !== cardKey;
                     })
                 }
             );
@@ -64,7 +74,7 @@ class Column extends React.Component {
                     { this.state.cardList && this.state.cardList.map(
                         (value, index) => {
                             return(
-                                <Card columnIndex={ value.columnIndex } cardIndex={ value.cardIndex } deleteCard={ value.deleteCard } key={ value.key } text={ value.text } />
+                                <Card columnIndex={ value.columnIndex } cardKey={ value.key } deleteCard={ value.deleteCard } text={ value.text } />
                             );
                         }
                         )

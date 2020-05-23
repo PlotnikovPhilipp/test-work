@@ -10,7 +10,8 @@ export class Card extends React.Component {
     }
 
     moveCard() {
-        this.props.dispatch({ type: 'MOVE_CARD', columnIndex: this.props.columnIndex, cardIndex: this.props.cardIndex, deleteCard: this.props.deleteCard });
+        this.props.dispatch({ type: 'MOVE_CARD', columnIndex: this.props.columnIndex, cardText: this.props.text });
+        this.props.deleteCard(this.props.cardKey);
     }
 
     render() {

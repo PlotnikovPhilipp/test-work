@@ -5,13 +5,23 @@ function reducer(state = null, action) {
         case 'MOVE_CARD':
             return ({
                     columnIndex: action.columnIndex,
-                    cardIndex: action.cardIndex,
-                    deleteCard: action.deleteCard 
+                    cardText: action.cardText,
+                    needMove: true,
                 });
+        case 'MOVE_END':
+            return({
+                currentIndex: -1,
+                text: '',
+                needMove: false
+            })
         default:
             return(
-                { currentIndex: -1, text: '' }
-            );
+                { 
+                    currentIndex: -1,
+                    text: '',
+                    needMove: false
+                }
+            )
     }
 }
 
