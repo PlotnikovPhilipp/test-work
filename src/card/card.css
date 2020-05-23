@@ -1,0 +1,23 @@
+.card {
+    background-color: rgb(224, 223, 223);
+    padding: 4% 3%;
+    -webkit-border-radius: 1vw;
+    -moz-border-radius: 1vw;
+    -ms-border-radius: 1vw;
+    -o-border-radius: 1vw;
+    border-radius: 1vw;
+    width: 90%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.card__footer {
+    width: 100%;
+    text-align: right;
+}
+
+.card__right-arrow {
+    width: 1.5vw;
+    height: 1.5vw;
+    cursor: pointer;
+}

@@ -24,5 +24,7 @@ html {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    padding-top: 2%;
     width: 100%;
+    justify-content: space-around;
 }
