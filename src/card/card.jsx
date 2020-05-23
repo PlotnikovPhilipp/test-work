@@ -9,14 +9,19 @@ export class Card extends React.Component {
         this.moveCard = this.moveCard.bind(this);
     }
 
-    moveCard() {
+    moveCard(event) {
+        event.stopPropagation();
         this.props.dispatch({ type: 'MOVE_CARD', columnIndex: this.props.columnIndex, cardText: this.props.text });
         this.props.deleteCard(this.props.cardKey);
     }
 
+    openCard = () => {
+        alert(this.props.text);
+    }
+
     render() {
         return(
-            <div className="card">
+            <div className="card" onClick={ this.openCard }>
                 <p>
                     { this.props.text }
                 </p>
