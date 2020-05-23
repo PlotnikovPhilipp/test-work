@@ -39,7 +39,7 @@ class Column extends React.Component {
             return(
                 {
                     cardList: prevState.cardList.filter((value, index) => {
-                        return (index === cardIndex)? false: true;
+                        return index !== cardIndex;
                     })
                 }
             );
