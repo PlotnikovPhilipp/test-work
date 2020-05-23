@@ -1,6 +1,6 @@
 import React from 'react';
 import './column.css';
-import { Card } from '../card/card';
+import Card from '../card/card';
 
 export class Column extends React.Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export class Column extends React.Component {
     addCard() {
         const text = prompt('Введите текст', '');
         if(!text) return;
-        this.setState((prevState) => this.state.cardList.push(<Card key={ text } text={ text } />));
+        this.setState((prevState) => this.state.cardList.push(<Card column={ this } index={ this.props.index } key={ text } text={ text } />));
     }
 
     render() {
@@ -32,7 +32,7 @@ export class Column extends React.Component {
                 {
                     // Main part
                 }
-                <section className="column__body">
+                <section ref={(ref) => { this.columnBody = (this.columnBody == null || ref != null)? ref : this.columnBody }} className="column__body">
                     { (this.state.cardList)? this.state.cardList : null }
                 </section>
             </div>
