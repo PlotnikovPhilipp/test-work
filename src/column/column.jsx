@@ -1,19 +1,27 @@
 import React from 'react';
 import './column.css';
 import Card from '../card/card';
+import { connect } from 'react-redux';
 
-export class Column extends React.Component {
+function mapStateToProps(state, ownProps) {
+    if(state.index + 1 != ownProps.index) return;
+    state.self.columnBody.removeChild(state.card);
+    ownProps.addCard(state.text); 
+}
+
+class Column extends React.Component {
     constructor(props) {
         super(props);
         this.addCard = this.addCard.bind(this);
         this.columnBody = null;
+        this.props.addCard = this.addCard;
         this.state = {
             cardList: []
         };
     }
 
-    addCard() {
-        const text = prompt('Введите текст', '');
+    addCard(text) {
+        text = (text)? text : prompt('Введите текст', '');
         if(!text) return;
         this.setState((prevState) => this.state.cardList.push(<Card column={ this } index={ this.props.index } key={ text } text={ text } />));
     }
@@ -39,3 +47,5 @@ export class Column extends React.Component {
         );
     }
 }
+
+export default connect(mapStateToProps)(Column);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Column } from './column/column';
+import Column from './column/column';
 import { store } from './store';
 import { Provider, connect } from 'react-redux';
 
@@ -37,24 +37,18 @@ const columnSettings = [
   }
 ];
 
-function mapStateToProps(state, ownProps) {
-  if(state.index + 1 != ownProps.index) return;
-   
-}
-
 class Board extends React.Component {
-  constructor(props) {
-    super(props);
-    for(let i = 0; i < amountOfColumns; i++) {
-      columnList.push(
-        connect(mapStateToProps)(<Column index={ columnSettings[i].index } key={ columnSettings[i].id } title={ columnSettings[i].title } color={ columnSettings[i].color }/>)
-      );
-    }
-  }
-
   render() {
     return(
-      columnList
+      <Provider store={ store }>
+       { columnSettings.map(
+         (value, index) => {
+          return(
+            <Column index={ value.index } key={ value.id } color={ value.color } title={ value.title } />
+          );
+         }
+       ) }
+      </Provider>
     );
   }
 }
