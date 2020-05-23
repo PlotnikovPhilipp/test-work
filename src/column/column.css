@@ -1,0 +1,19 @@
+.column {
+    width: 25%;
+}
+
+.column__header {
+    font-size: 1.1rem;
+    font-weight: bold;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+}
+
+.column__add-card {
+    width: 10%;
+    display: block;
+}
+

@@ -1,0 +1,27 @@
+/* 
+
+    Default styles
+
+*/
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    border: none;
+}
+
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 1vw;
+}
+
+#root {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
