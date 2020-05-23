@@ -11,8 +11,7 @@ export class Card extends React.Component {
                     { this.props.text }
                 </p>
                 <footer className="card__footer">
-                    <img title="move to right column" onClick={ () => this.dispatch({ type: 'MOVE_CARD', index: this.props.index, self: this.props.column, card: this }) }
-                    className="card__right-arrow" src="./imgs/right-arrow.png" alt="move right"/>
+                    <img title="move to right column" onClick={ () => this.props.dispatch({ type: 'MOVE_CARD', index: this.props.index, self: this.props.column, card: this }) } className="card__right-arrow" src="./imgs/right-arrow.png" alt="move right"/>
                 </footer>
             </div>
         );

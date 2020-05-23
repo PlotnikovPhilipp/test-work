@@ -4,9 +4,14 @@ import Card from '../card/card';
 import { connect } from 'react-redux';
 
 function mapStateToProps(state, ownProps) {
-    if(state.index + 1 != ownProps.index) return;
+    if(state.index + 1 != ownProps.index) return {};
     state.self.columnBody.removeChild(state.card);
-    ownProps.addCard(state.text); 
+    return (
+        {
+            moveCard: true,
+            text: state.card.props.text
+        }
+    );
 }
 
 class Column extends React.Component {
@@ -14,7 +19,6 @@ class Column extends React.Component {
         super(props);
         this.addCard = this.addCard.bind(this);
         this.columnBody = null;
-        this.props.addCard = this.addCard;
         this.state = {
             cardList: []
         };
@@ -24,6 +28,12 @@ class Column extends React.Component {
         text = (text)? text : prompt('Введите текст', '');
         if(!text) return;
         this.setState((prevState) => this.state.cardList.push(<Card column={ this } index={ this.props.index } key={ text } text={ text } />));
+    }
+
+    componentDidUpdate() {
+        if(!this.props.moveCard) return;
+        this.props.moveCard = false;
+        this.addCard(this.props.text);
     }
 
     render() {

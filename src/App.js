@@ -1,12 +1,10 @@
 import React from 'react';
 import Column from './column/column';
 import { store } from './store';
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import './board.css';
 
-const amountOfColumns = 4;
-const columnList = [];
 const columnSettings = [
   {
     id: 'Наряды',
@@ -44,7 +42,7 @@ class Board extends React.Component {
        { columnSettings.map(
          (value, index) => {
           return(
-            <Column index={ value.index } key={ value.id } color={ value.color } title={ value.title } />
+            <Column index={ value.index } moveCard={ false } key={ value.id } color={ value.color } title={ value.title } />
           );
          }
        ) }
